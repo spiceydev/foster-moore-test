@@ -122,7 +122,6 @@ export default function Create() {
       >
         {({ errors, touched }) => (
           <Form>
-            {console.log(touched?.placeOfBirth)}
             <Input
               id="firstName"
               label="First Name"

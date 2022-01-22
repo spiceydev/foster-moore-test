@@ -68,7 +68,7 @@ const Mutation = mutationType({
       },
       resolve: (_, args, ctx) => {
         try {
-          return ctx.db.customer.create({
+          const customer = ctx.db.customer.create({
             data: {
               firstName: args.firstName,
               lastName: args.lastName,
@@ -79,6 +79,7 @@ const Mutation = mutationType({
               licenseImageUrl: args.licenseImageUrl || undefined,
             },
           });
+          return customer;
         } catch (error) {
           throw Error(`${error}`);
         }

@@ -51,12 +51,26 @@ export default function Create() {
 
   const router = useRouter();
   const [error, setError] = useState(null);
-  const [upLoadedImage, setupLoadedImage] = useState("");
-  const [image, setImage] = useState<string | Blob>("");
-  const [createObjectURL, setCreateObjectURL] = useState("");
+  const [image, setImage] = useState<any>();
+  const [imageUrl, setImageUrl] = useState("");
+
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "my-uploads");
+    data.append("cloud_name", "dqkykbrwu");
+    fetch("https://api.cloudinary.com/v1_1/dqkykbrwu/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImageUrl(data.url);
+      })
+      .catch((err) => setError(err));
+  };
 
   const handleOnSubmit = async (values: FormValues) => {
-    if (createObjectURL !== "") await uploadToServer();
     await client
       .mutation({
         createCustomer: [
@@ -71,7 +85,7 @@ export default function Create() {
                 ? new Date(values.licenseDate).toISOString()
                 : ""
             }`,
-            licenseImageUrl: upLoadedImage,
+            licenseImageUrl: imageUrl,
           },
           {
             id: true,
@@ -82,25 +96,6 @@ export default function Create() {
         router.push("/");
       })
       .catch((error: any) => setError(error.message));
-  };
-
-  const uploadToClient = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const i = event.target.files[0];
-
-      setupLoadedImage(i.name);
-      setImage(i);
-      setCreateObjectURL(URL.createObjectURL(i));
-    }
-  };
-
-  const uploadToServer = async () => {
-    const body = new FormData();
-    body.append("file", image);
-    await fetch("/api/file", {
-      method: "POST",
-      body,
-    });
   };
 
   return (
@@ -166,9 +161,9 @@ export default function Create() {
               type="date"
             />
 
-            {createObjectURL && (
+            {imageUrl && (
               <Image
-                src={createObjectURL}
+                src={imageUrl}
                 alt=""
                 width="200"
                 height="200"
@@ -180,10 +175,13 @@ export default function Create() {
             </h4>
             <input
               type="file"
-              name="myImage"
-              onChange={uploadToClient}
+              name="file"
+              onChange={(e) => setImage(e?.target?.files?.[0])}
               className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             />
+            <button type="button" onClick={uploadImage}>
+              Upload
+            </button>
 
             <button
               type="submit"

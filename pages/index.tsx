@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
 import { client } from "../util/genqlClient";
@@ -56,6 +57,12 @@ export default function Home() {
                     >
                       ID Provided
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                    >
+                      ID Image
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,6 +84,18 @@ export default function Home() {
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                           {customer.licenseNumber ? "Yes" : "No"}
+                        </td>
+
+                        <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                          {customer.licenseImageUrl ? (
+                            <Image
+                              src={customer.licenseImageUrl}
+                              alt=""
+                              width="50"
+                              height="50"
+                              className="object-contain"
+                            ></Image>
+                          ) : null}
                         </td>
                       </tr>
                     ))}

@@ -1,34 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">Welcome to foster-moore-test 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/spiceydev/foster-moore-test#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/spiceydev/foster-moore-test/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/spiceydev/foster-moore-test/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/spiceydev/foster-moore-test" />
+  </a>
+</p>
 
-## Getting Started
+A small project built as part of the interview process at Foster Moore.
 
-First, run the development server:
+To build this application I used NextJs to build a full stack type safe application using TypeScript prisma, graphql, and mongoDB.
 
-```bash
-npm run dev
-# or
-yarn dev
+I used Genql to generate a typed graphql client and then used Apollo-micro-server to make it available.
+
+File upload was originally a simple system that uploaded locally but after realising that I would not be able to do this on Vercel I swapped to using cloudinary.
+
+<br>
+### 🏠 [Homepage](https://foster-moore-test.vercel.app/)
+
+## Install
+
+```sh
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Author
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+👤 **Adam Spice**
 
-## Learn More
+- Website: https://spicey.dev
+- Github: [@spiceydev](https://github.com/spiceydev)
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/spiceydev/foster-moore-test/issues). You can also take a look at the [contributing guide](https://github.com/spiceydev/foster-moore-test/blob/master/CONTRIBUTING.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 📝 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Copyright © 2022 [Adam Spice](https://github.com/spiceydev).<br />
+This project is [MIT](https://github.com/spiceydev/foster-moore-test/blob/master/LICENSE) licensed.

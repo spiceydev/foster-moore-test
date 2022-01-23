@@ -1,6 +1,18 @@
 {
-  "name": "foster-moore",
+  "name": "foster-moore-test",
   "private": true,
+  "version": "0.1.3",
+  "description": "A small project built as part of the interview process at Foster Moore.",
+  "author": "Adam Spice",
+  "license": "MIT",
+  "homepage": "https://foster-moore-test.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spiceydev/foster-moore-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/spiceydev/foster-moore-test/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,7 +27,6 @@
     "@heroicons/react": "^1.0.5",
     "@prisma/client": "^3.8.1",
     "apollo-server-micro": "^2.25.2",
-    "formidable": "^2.0.1",
     "formik": "^2.2.9",
     "graphql": "^15.8.0",
     "graphql-scalars": "^1.14.1",

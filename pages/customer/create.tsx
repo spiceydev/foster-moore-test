@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import Input from "../../components/Input";
+import Loader from "../../components/Loader";
 import Select from "../../components/Select";
 import { countries } from "../../util/countries";
 import { client } from "../../util/genqlClient";
@@ -53,8 +54,10 @@ export default function Create() {
   const [error, setError] = useState(null);
   const [image, setImage] = useState<any>();
   const [imageUrl, setImageUrl] = useState("");
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   const uploadImage = () => {
+    setIsImageLoading(true);
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "my-uploads");
@@ -66,8 +69,12 @@ export default function Create() {
       .then((res) => res.json())
       .then((data) => {
         setImageUrl(data.url);
+        setIsImageLoading(false);
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setError(err);
+        setIsImageLoading(false);
+      });
   };
 
   const handleOnSubmit = async (values: FormValues) => {
@@ -108,90 +115,98 @@ export default function Create() {
           </a>
         </Link>
       </div>
-      <Formik
-        initialValues={initialFormValues}
-        validationSchema={CreateCustomerSchema}
-        onSubmit={(values) => {
-          handleOnSubmit(values);
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <Input
-              id="firstName"
-              label="First Name"
-              error={errors.firstName}
-              touched={touched.firstName}
-            />
+      <div className="mb-8">
+        <Formik
+          initialValues={initialFormValues}
+          validationSchema={CreateCustomerSchema}
+          onSubmit={(values) => {
+            handleOnSubmit(values);
+          }}
+        >
+          {({ errors, touched, isSubmitting }) => (
+            <Form>
+              <Input
+                id="firstName"
+                label="First Name"
+                error={errors.firstName}
+                touched={touched.firstName}
+              />
 
-            <Input
-              id="lastName"
-              label="Last Name"
-              error={errors?.lastName}
-              touched={touched?.lastName}
-            />
-            <Input
-              id="dateOfBirth"
-              label="Date Of Birth"
-              error={errors?.dateOfBirth}
-              touched={touched?.dateOfBirth}
-              type="date"
-            />
+              <Input
+                id="lastName"
+                label="Last Name"
+                error={errors?.lastName}
+                touched={touched?.lastName}
+              />
+              <Input
+                id="dateOfBirth"
+                label="Date Of Birth"
+                error={errors?.dateOfBirth}
+                touched={touched?.dateOfBirth}
+                type="date"
+              />
 
-            <Select
-              id="placeOfBirth"
-              label="Place Of Birth"
-              error={errors?.placeOfBirth}
-              touched={touched?.placeOfBirth}
-              options={countries}
-            />
+              <Select
+                id="placeOfBirth"
+                label="Place Of Birth"
+                error={errors?.placeOfBirth}
+                touched={touched?.placeOfBirth}
+                options={countries}
+              />
 
-            <Input
-              id="licenseNumber"
-              label="License Number"
-              error={errors?.licenseNumber}
-              touched={touched?.licenseNumber}
-            />
+              <Input
+                id="licenseNumber"
+                label="License Number"
+                error={errors?.licenseNumber}
+                touched={touched?.licenseNumber}
+              />
 
-            <Input
-              id="licenseDate"
-              label="License Date"
-              error={errors?.licenseDate}
-              touched={touched?.licenseDate}
-              type="date"
-            />
+              <Input
+                id="licenseDate"
+                label="License Date"
+                error={errors?.licenseDate}
+                touched={touched?.licenseDate}
+                type="date"
+              />
 
-            {imageUrl && (
-              <Image
-                src={imageUrl}
-                alt=""
-                width="200"
-                height="200"
-                className="object-contain"
-              ></Image>
-            )}
-            <h4 className="block text-sm font-medium text-gray-700">
-              License Image
-            </h4>
-            <input
-              type="file"
-              name="file"
-              onChange={(e) => setImage(e?.target?.files?.[0])}
-              className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            />
-            <button type="button" onClick={uploadImage}>
-              Upload
-            </button>
-
-            <button
-              type="submit"
-              className="inline-flex items-center px-4 py-2 mt-8 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
+              {imageUrl && (
+                <>
+                  <Image
+                    src={imageUrl}
+                    alt=""
+                    width="200"
+                    height="200"
+                    className="object-contain"
+                  ></Image>
+                </>
+              )}
+              <h4 className="block text-sm font-medium text-gray-700">
+                License Image
+              </h4>
+              <input
+                type="file"
+                name="file"
+                onChange={(e) => setImage(e?.target?.files?.[0])}
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={uploadImage}
+                className="inline-flex items-center px-4 py-2 mt-8 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                {isImageLoading && <Loader type="button" />} Upload Image
+              </button>
+              <br />
+              <button
+                type="submit"
+                className="inline-flex items-center px-4 py-2 mt-8 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                {isSubmitting && <Loader type="button" />} Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </>
   );
 }

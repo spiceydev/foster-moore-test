@@ -170,15 +170,13 @@ export default function Create() {
               />
 
               {imageUrl && (
-                <>
-                  <Image
-                    src={imageUrl}
-                    alt=""
-                    width="200"
-                    height="200"
-                    className="object-contain"
-                  ></Image>
-                </>
+                <Image
+                  src={imageUrl}
+                  alt=""
+                  width="200"
+                  height="200"
+                  className="object-contain"
+                />
               )}
               <h4 className="block text-sm font-medium text-gray-700">
                 License Image
@@ -189,13 +187,14 @@ export default function Create() {
                 onChange={(e) => setImage(e?.target?.files?.[0])}
                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               />
-              {imageUrl && (
+              {image && (
                 <button
                   type="button"
                   onClick={uploadImage}
                   className="inline-flex items-center px-4 py-2 mt-8 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  {isImageLoading && <Loader type="button" />} Upload Image
+                  {isImageLoading && <Loader type="button" />} Upload
+                  {isImageLoading ? "ing" : ""} Image
                 </button>
               )}
               <br />
